@@ -77,3 +77,161 @@
       <small>プロトタイプ v0.1.0</small></p>
     </div>
   </aside>
+
+  <!-- メインコンテンツ -->
+  <div class="main-content">
+
+    <!-- トップバー -->
+    <header class="topbar">
+      <button class="topbar-menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <h2 class="topbar-title" id="page-title">ダッシュボード</h2>
+      <div class="topbar-right">
+        <button class="topbar-notif" onclick="showNotif()">
+          <i class="fas fa-bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="topbar-avatar" id="topbar-avatar-el" onclick="navigate('character')">🧙</div>
+      </div>
+    </header>
+
+    <!-- ページコンテナ -->
+    <main class="page-container">
+
+      <!-- ===== DASHBOARD ===== -->
+      <section id="page-dashboard" class="page active">
+        <div class="page-inner">
+          <!-- 挨拶バナー -->
+          <div class="greeting-banner">
+            <div class="greeting-text">
+              <h3>おはよう、<span id="greeting-name">勇者ナオ</span>！ 🌅</h3>
+              <p>今日も3つのクエストが待っている。</p>
+            </div>
+            <div class="greeting-streak">
+              <i class="fas fa-fire"></i>
+              <span id="streak-count">7</span>日連続
+            </div>
+          </div>
+
+          <!-- ステータスカード群 -->
+          <div class="stat-cards">
+            <div class="stat-card purple">
+              <i class="fas fa-star"></i>
+              <div class="stat-val" id="stat-xp">240</div>
+              <div class="stat-label">今日のXP</div>
+            </div>
+            <div class="stat-card orange">
+              <i class="fas fa-check-circle"></i>
+              <div class="stat-val" id="stat-done">2</div>
+              <div class="stat-label">完了クエスト</div>
+            </div>
+            <div class="stat-card blue">
+              <i class="fas fa-tasks"></i>
+              <div class="stat-val" id="stat-pending">3</div>
+              <div class="stat-label">残りクエスト</div>
+            </div>
+            <div class="stat-card green">
+              <i class="fas fa-fire"></i>
+              <div class="stat-val">7</div>
+              <div class="stat-label">連続日数</div>
+            </div>
+          </div>
+
+          <!-- 今日のクエスト -->
+          <div class="section-header">
+            <h3><i class="fas fa-sword"></i> 今日のクエスト</h3>
+            <button class="btn-link" onclick="navigate('tasks')">すべて見る →</button>
+          </div>
+          <div class="task-list-mini" id="dashboard-tasks"></div>
+
+          <!-- XPゲージ -->
+          <div class="xp-section">
+            <div class="xp-header">
+              <span>Lv.<span id="dash-level">3</span> — <span id="dash-class">魔法使い</span></span>
+              <span id="dash-xp-label">240 / 400 XP</span>
+            </div>
+            <div class="xp-bar">
+              <div class="xp-fill" id="dash-xp-fill"></div>
+              <div class="xp-glow" id="dash-xp-glow"></div>
+            </div>
+          </div>
+
+          <!-- 習慣スナップ -->
+          <div class="section-header">
+            <h3><i class="fas fa-fire"></i> 習慣チェック</h3>
+            <button class="btn-link" onclick="navigate('habits')">詳細 →</button>
+          </div>
+          <div class="habit-snap" id="habit-snap"></div>
+
+          <!-- バッジ -->
+          <div class="section-header">
+            <h3><i class="fas fa-medal"></i> 獲得バッジ</h3>
+          </div>
+          <div class="badge-row" id="badge-row"></div>
+        </div>
+      </section>
+
+      <!-- ===== TASKS ===== -->
+      <section id="page-tasks" class="page">
+        <div class="page-inner">
+          <div class="tasks-header">
+            <div class="tasks-filter">
+              <button class="filter-btn active" data-filter="all" onclick="filterTasks('all',this)">全て</button>
+              <button class="filter-btn" data-filter="todo" onclick="filterTasks('todo',this)">未着手</button>
+              <button class="filter-btn" data-filter="inprogress" onclick="filterTasks('inprogress',this)">進行中</button>
+              <button class="filter-btn" data-filter="done" onclick="filterTasks('done',this)">完了</button>
+            </div>
+            <button class="btn-primary" onclick="openAddTask()"><i class="fas fa-plus"></i> クエスト追加</button>
+          </div>
+
+          <div class="task-list" id="task-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== HABITS ===== -->
+      <section id="page-habits" class="page">
+        <div class="page-inner">
+          <div class="habits-top">
+            <h3>習慣トラッカー</h3>
+            <button class="btn-primary" onclick="openAddHabit()"><i class="fas fa-plus"></i> 追加</button>
+          </div>
+          <div class="habit-list" id="habit-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== CHARACTER ===== -->
+      <section id="page-character" class="page">
+        <div class="page-inner">
+          <div class="char-page">
+            <!-- キャラビジュアル -->
+            <div class="char-visual-panel">
+              <div class="char-big-avatar" id="char-big-avatar">🧙</div>
+              <div class="char-big-name" id="char-big-name">勇者ナオ</div>
+              <div class="char-big-level">Lv.<span id="char-level-disp">3</span> <span id="char-class-disp">魔法使い</span></div>
+              <div class="xp-bar-char">
+                <div class="xp-fill" id="char-xp-fill"></div>
+              </div>
+              <div class="xp-num"><span id="char-xp-num">240</span> / <span id="char-xp-max-num">400</span> XP</div>
+
+              <!-- ステータス -->
+              <div class="stat-radar">
+                <div class="stat-row"><span>HP</span><div class="stat-bar"><div class="stat-fill hp" style="width:70%"></div></div><span>70</span></div>
+                <div class="stat-row"><span>MP</span><div class="stat-bar"><div class="stat-fill mp" style="width:55%"></div></div><span>55</span></div>
+                <div class="stat-row"><span>集中力</span><div class="stat-bar"><div class="stat-fill focus" style="width:80%" id="stat-focus-bar"></div></div><span id="stat-focus-val">80</span></div>
+                <div class="stat-row"><span>継続力</span><div class="stat-bar"><div class="stat-fill streak" style="width:60%" id="stat-streak-bar"></div></div><span id="stat-streak-val">60</span></div>
+              </div>
+            </div>
+
+            <!-- クラス選択 -->
+            <div class="char-right-panel">
+              <h4>⚔️ クラス選択</h4>
+              <div class="class-grid" id="class-grid"></div>
+
+              <h4>🎖️ 獲得済みバッジ</h4>
+              <div class="badge-grid" id="char-badge-grid"></div>
+
+              <h4>📈 累計実績</h4>
+              <div class="achievement-list" id="achievement-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
