@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuestTick — タスク×ゲームで継続力UP</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ========== SPLASH SCREEN ========== -->
+<div id="splash-screen" class="splash">
+  <div class="splash-inner">
+    <div class="splash-logo">
+      <span class="logo-icon">⚔️</span>
+      <h1 class="logo-text">QuestTick</h1>
+      <p class="logo-sub">タスクをクリアして、勇者になれ。</p>
+    </div>
+    <button class="btn-start" onclick="startApp()">冒険を始める</button>
+    <p class="splash-cite">※ プロトタイプ — ゲーミフィケーション研究に基づく設計<br>
+    出典: Foroughi et al. (2023) <em>The Electronic Library</em> / Gerdenitsch et al. (2020) <em>Electronic Commerce Research and Applications</em></p>
+  </div>
+  <div class="splash-particles" id="particles"></div>
+</div>
+
+<!-- ========== APP SHELL ========== -->
+<div id="app" class="app hidden">
+
+  <!-- サイドバー -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-logo">⚔️</span>
+      <span class="sidebar-title">QuestTick</span>
+      <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- キャラクターミニカード -->
+    <div class="char-mini-card">
+      <div class="char-avatar" id="sidebar-avatar">🧙</div>
+      <div class="char-info">
+        <div class="char-name" id="sidebar-char-name">勇者ナオ</div>
+        <div class="char-level">Lv.<span id="sidebar-level">3</span> <span class="char-class" id="sidebar-class">魔法使い</span></div>
+        <div class="xp-bar-mini">
+          <div class="xp-fill-mini" id="sidebar-xp-bar"></div>
+        </div>
+        <div class="xp-label-mini"><span id="sidebar-xp">240</span> / <span id="sidebar-xp-max">400</span> XP</div>
+      </div>
+    </div>
+
+    <!-- ナビ -->
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
+        <i class="fas fa-home"></i><span>ダッシュボード</span>
+      </button>
+      <button class="nav-item" data-page="tasks" onclick="navigate('tasks')">
+        <i class="fas fa-sword"></i><span>クエスト一覧</span>
+        <span class="nav-badge" id="nav-task-badge">5</span>
+      </button>
+      <button class="nav-item" data-page="habits" onclick="navigate('habits')">
+        <i class="fas fa-fire"></i><span>習慣トラッカー</span>
+      </button>
+      <button class="nav-item" data-page="character" onclick="navigate('character')">
+        <i class="fas fa-user-shield"></i><span>キャラクター</span>
+      </button>
+      <button class="nav-item" data-page="ranking" onclick="navigate('ranking')">
+        <i class="fas fa-crown"></i><span>ランキング</span>
+      </button>
+      <button class="nav-item" data-page="pomodoro" onclick="navigate('pomodoro')">
+        <i class="fas fa-clock"></i><span>ポモドーロ</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>Next.js + TypeScript + Prisma<br>
+      <small>プロトタイプ v0.1.0</small></p>
+    </div>
+  </aside>
