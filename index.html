@@ -235,3 +235,149 @@
           </div>
         </div>
       </section>
+      <!-- ===== RANKING ===== -->
+      <section id="page-ranking" class="page">
+        <div class="page-inner">
+          <div class="ranking-tabs">
+            <button class="filter-btn active" onclick="showRanking('weekly',this)">今週</button>
+            <button class="filter-btn" onclick="showRanking('all',this)">累計</button>
+          </div>
+          <div class="ranking-list" id="ranking-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== POMODORO ===== -->
+      <section id="page-pomodoro" class="page">
+        <div class="page-inner">
+          <div class="pomodoro-panel">
+            <div class="pomodoro-circle" id="pomo-circle">
+              <svg class="pomo-svg" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="90" class="pomo-track"/>
+                <circle cx="100" cy="100" r="90" class="pomo-progress" id="pomo-progress-ring"
+                  stroke-dasharray="565.5" stroke-dashoffset="0"/>
+              </svg>
+              <div class="pomo-time" id="pomo-time">25:00</div>
+              <div class="pomo-label" id="pomo-label">集中タイム</div>
+            </div>
+            <div class="pomo-controls">
+              <button class="pomo-btn" id="pomo-start-btn" onclick="pomodoroToggle()"><i class="fas fa-play"></i> スタート</button>
+              <button class="pomo-btn pomo-reset" onclick="pomodoroReset()"><i class="fas fa-undo"></i> リセット</button>
+            </div>
+            <div class="pomo-modes">
+              <button class="pomo-mode active" data-mins="25" onclick="setPomoMode(25,this)">集中 25分</button>
+              <button class="pomo-mode" data-mins="5" onclick="setPomoMode(5,this)">短休憩 5分</button>
+              <button class="pomo-mode" data-mins="15" onclick="setPomoMode(15,this)">長休憩 15分</button>
+            </div>
+            <div class="pomo-task-link">
+              <p>紐づけクエスト:</p>
+              <select id="pomo-task-select" class="pomo-select">
+                <option>数学の問題集 p.12–20</option>
+                <option>英語長文読解</option>
+                <option>プログラミング課題</option>
+              </select>
+            </div>
+            <div class="pomo-sessions">
+              <span id="pomo-session-count">0</span> セッション完了 / 今日 +<span id="pomo-xp-gain">0</span> XP
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODALS ========== -->
+
+<!-- タスク追加モーダル -->
+<div class="modal-overlay hidden" id="modal-add-task">
+  <div class="modal">
+    <h3><i class="fas fa-plus"></i> 新クエスト追加</h3>
+    <div class="modal-form">
+      <label>クエスト名</label>
+      <input type="text" id="new-task-name" placeholder="例: 数学の問題集を10問解く" />
+
+      <label>科目 / カテゴリ</label>
+      <select id="new-task-category">
+        <option>📚 勉強</option>
+        <option>💻 プログラミング</option>
+        <option>🏃 運動</option>
+        <option>🎨 趣味</option>
+        <option>📝 その他</option>
+      </select>
+
+      <label>難易度</label>
+      <div class="diff-select" id="diff-select">
+        <button class="diff-btn" data-diff="easy" onclick="selectDiff('easy',this)">⭐ Easy +20XP</button>
+        <button class="diff-btn active" data-diff="medium" onclick="selectDiff('medium',this)">⭐⭐ Medium +50XP</button>
+        <button class="diff-btn" data-diff="hard" onclick="selectDiff('hard',this)">⭐⭐⭐ Hard +100XP</button>
+      </div>
+
+      <label>期限</label>
+      <input type="date" id="new-task-due" />
+
+      <label>メモ</label>
+      <textarea id="new-task-memo" rows="2" placeholder="補足メモ"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-add-task')">キャンセル</button>
+      <button class="btn-primary" onclick="addTask()">クエスト追加！</button>
+    </div>
+  </div>
+</div>
+
+<!-- 習慣追加モーダル -->
+<div class="modal-overlay hidden" id="modal-add-habit">
+  <div class="modal">
+    <h3><i class="fas fa-fire"></i> 習慣追加</h3>
+    <div class="modal-form">
+      <label>習慣名</label>
+      <input type="text" id="new-habit-name" placeholder="例: 英単語10個" />
+      <label>頻度</label>
+      <select id="new-habit-freq">
+        <option>毎日</option>
+        <option>平日のみ</option>
+        <option>週3回</option>
+      </select>
+      <label>カラー</label>
+      <div class="color-pick" id="color-pick">
+        <button class="color-btn active" data-color="#6366f1" style="background:#6366f1" onclick="selectColor('#6366f1',this)"></button>
+        <button class="color-btn" data-color="#f59e0b" style="background:#f59e0b" onclick="selectColor('#f59e0b',this)"></button>
+        <button class="color-btn" data-color="#10b981" style="background:#10b981" onclick="selectColor('#10b981',this)"></button>
+        <button class="color-btn" data-color="#ef4444" style="background:#ef4444" onclick="selectColor('#ef4444',this)"></button>
+        <button class="color-btn" data-color="#3b82f6" style="background:#3b82f6" onclick="selectColor('#3b82f6',this)"></button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-add-habit')">キャンセル</button>
+      <button class="btn-primary" onclick="addHabit()">追加！</button>
+    </div>
+  </div>
+</div>
+
+<!-- レベルアップ演出 -->
+<div class="levelup-overlay hidden" id="levelup-overlay">
+  <div class="levelup-box">
+    <div class="levelup-burst">✨</div>
+    <h2 class="levelup-title">LEVEL UP！</h2>
+    <div class="levelup-lv">Lv.<span id="levelup-num">4</span></div>
+    <p class="levelup-msg" id="levelup-msg">新しい力が解放された！</p>
+    <button class="btn-primary" onclick="closeLevelup()">続ける ⚔️</button>
+  </div>
+</div>
+
+<!-- XPトースト -->
+<div class="xp-toast hidden" id="xp-toast">
+  <span id="xp-toast-text">+50 XP 獲得！</span>
+</div>
+
+<!-- 通知パネル -->
+<div class="notif-panel hidden" id="notif-panel">
+  <div class="notif-header">通知 <button onclick="hideNotif()"><i class="fas fa-times"></i></button></div>
+  <div class="notif-list" id="notif-list"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
